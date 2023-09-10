@@ -1,0 +1,26 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    .header-block, .body-block, .buttons-block, .inputs-block, .input-block {
+        margin: auto;
+        display: flex;
+    }
+
+    .header-block, .body-block {
+        width: 100%;
+    }
+
+    .body-block, .inputs-block {
+        flex-direction: column;
+    }
+
+    .header {
+        margin: auto;
+    }
+    
+    .buttons-block, .input-block {
+        flex-direction: row;
+    }
+}

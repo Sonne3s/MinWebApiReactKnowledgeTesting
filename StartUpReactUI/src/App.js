@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"
+
+import Constants from "./utilities/Constants"
+
+import AuthPage from "./components/AuthPage"
+import HomePage from "./components/HomePage"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [currentPage, setCurrentPage] = useState(Constants.CURRENT_PAGE.Auth);
+
+  function renderSwitch() {
+    switch (currentPage) {
+      case Constants.CURRENT_PAGE.Auth:
+        return <AuthPage onPostCreated={onPostCreated} changePage={changePage} />
+      case Constants.CURRENT_PAGE.Home:
+        return <HomePage onPostCreated={onPostCreated} changePage={changePage} />
+      default:
+        return "";
+    }
+  }
+
+  return (renderSwitch());
+
+
+  function onPostCreated(createdPost) {
+
+    if (createdPost === null) {
+      return;
+    }
+
+    alert(`Post successfully created. After clicking OK, your new post titled '${createdPost.title}' will show up in the table below.`);
+  }
+
+  function changePage(page) {
+    setCurrentPage(page);
+  }
 }
 
 export default App;

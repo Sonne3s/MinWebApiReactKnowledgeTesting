@@ -1,0 +1,41 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+.form .header-block, .form .body-block, .form .buttons-block, .form .inputs-block, .form .input-block {
+  margin: auto;
+  display: flex;
+}
+.form .header-block, .form .body-block {
+  width: 100%;
+}
+.form .body-block, .form .inputs-block {
+  flex-direction: column;
+}
+.form .header {
+  margin: auto;
+}
+.form .buttons-block, .form .input-block {
+  flex-direction: row;
+}
+
+.auth {
+  display: flex;
+  height: 100vh;
+}
+.auth .auth-form {
+  background-color: cadetblue;
+  width: 600px;
+  height: 200px;
+}
+
+.registration {
+  display: flex;
+  height: 100vh;
+}
+.registration .registration-form {
+  background-color: bisque;
+  width: 600px;
+  height: 200px;
+}/*# sourceMappingURL=main.css.map */
