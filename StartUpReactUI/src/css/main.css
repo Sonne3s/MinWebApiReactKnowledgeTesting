@@ -1,3 +1,54 @@
+#header {
+  display: flex;
+  height: 50px;
+  background-color: darksalmon;
+}
+#header #user-section {
+  justify-content: space-evenly;
+  display: flex;
+  margin-left: auto;
+}
+#header #user-section #user-menu, #header #user-section #auth-menu {
+  display: none;
+}
+#header #user-section #user-menu, #header #user-section #auth-menu {
+  background-color: brown;
+}
+#header #user-section.authenticated #unauthenticated-user {
+  display: none;
+}
+#header #user-section.authenticated:hover {
+  background-color: red;
+  width: 200px !important;
+}
+#header #user-section.authenticated:hover #authenticated-user-name {
+  display: none;
+}
+#header #user-section.authenticated:hover #user-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+#header #user-section:not(.authenticated) #authenticated-user-name {
+  display: none;
+}
+#header #user-section:not(.authenticated):hover {
+  background-color: red;
+  width: 200px !important;
+}
+#header #user-section:not(.authenticated):hover #unauthenticated-user-name {
+  display: none;
+}
+#header #user-section:not(.authenticated):hover #auth-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
 .form {
   display: flex;
   flex-direction: column;

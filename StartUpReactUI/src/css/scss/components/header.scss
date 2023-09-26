@@ -1,0 +1,7 @@
+#header {
+    display: flex;
+    height: 50px;
+    background-color:darksalmon;
+
+    @import "./header/user_section.scss";
+}

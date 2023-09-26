@@ -9,7 +9,7 @@ namespace Repositories.Interfaces
 {
     public interface IAuthsRepository
     {
-        bool СheckEquivalence(string login, string password);
+        Guid GetUserId(string login, string password);
 
         Task<Auth?> CreateAsync(string login, string password, User user);
     }

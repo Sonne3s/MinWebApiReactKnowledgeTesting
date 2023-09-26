@@ -10,5 +10,7 @@ namespace Repositories.Interfaces
     public interface IUsersRepository
     {
         Task<User?> CreateAsync(string login, string firstName, string middleName, string lastName);
+
+        Task<User?> Get(Guid id);
     }
 }

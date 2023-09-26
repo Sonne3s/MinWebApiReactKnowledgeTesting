@@ -10,9 +10,9 @@ namespace Repositories.Implementations
 {
     public class AuthsRepository : IAuthsRepository
     {
-        public bool СheckEquivalence(string login, string password)
+        public Guid GetUserId(string login, string password)
         {
-            using (var db = new Context()) { return db.Auths.SingleOrDefault(a => a.Login == login && a.Password == password) != null; }
+            using (var db = new Context()) { return db.Auths.SingleOrDefault(a => a.Login == login && a.Password == password).UserId; }
         }
 
         public async Task<Auth?> CreateAsync(string login, string password, User user)

@@ -3,6 +3,7 @@ using AdminAPI.Models;
 using Microsoft.Extensions.Hosting;
 using Repositories.Interfaces;
 using Repositories.Models;
+using System.Security.Claims;
 
 namespace AdminAPI
 {
@@ -18,32 +19,14 @@ namespace AdminAPI
 
             //_authentication = app.Services.GetRequiredService<IAuthorization>();
 
-            var summaries = new[]
-            {
-                "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            };
 
-            app.MapGet("/weatherforecast", () =>
+            app.MapPost("/registration", async (UserRegistration userRegistration, HttpContext context) =>
             {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                    new WeatherForecast
-                    (
-                        DateTime.Now.AddDays(index),
-                        Random.Shared.Next(-20, 55),
-                        summaries[Random.Shared.Next(summaries.Length)]
-                    ))
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast");
+                (Guid Id, string Login)? user = await _authentication.Registration(userRegistration);
 
-            app.MapPost("/registration", async (UserRegistration user) =>
-            {
-                var login = await _authentication.Registration(user);
-
-                if (login != null)
-                {
-                    return Results.Ok(login);
+                if (user.HasValue && await _authentication.CreateClaims(user.Value.Id.ToString(), context))
+                {                   
+                    return Results.Ok();
                 }
                 else
                 {
@@ -51,24 +34,48 @@ namespace AdminAPI
                 }
             }).WithName("Registration");
 
-            app.MapPost("/authentication", async (UserAuth auth) =>
+            app.MapPost("/authentication", async (UserAuth auth, HttpContext context) =>
             {
-                var login = await _authentication.Authentication(auth);
+                (Guid Id, string Login)? user = await _authentication.Authentication(auth);
 
-                if (login != null)
+                if (user.HasValue && await _authentication.CreateClaims(user.Value.Id.ToString(), context))
                 {
-                    return Results.Ok(login);
+                    return Results.Ok();
                 }
                 else
                 {
                     return Results.BadRequest();
                 }
             }).WithName("Authentication");
-        }
 
-            internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-        {
-            public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+            app.MapGet("/unauthentication", async (HttpContext context) =>
+            {
+                var result = await _authentication.Unauthentication(context);
+                try
+                {
+                    if (await _authentication.Unauthentication(context))
+                    {
+                        return Results.Ok();
+                    }
+
+                    return Results.BadRequest();
+                }
+
+                catch { return Results.BadRequest(); }
+            }).WithName("Unauthentication");
+
+            app.MapGet("/get-user-data", async (HttpContext context) =>
+            {
+                if (context?.User?.Identity?.IsAuthenticated ?? false && context?.User?.Identity?.Name != null)
+                {
+                    return Results.Ok(await _authentication.GetUserData(new Guid(context?.User?.Identity?.Name)));
+                }
+                else
+                {
+                    return Results.Unauthorized();
+                }
+            }).WithName("GetUserData");
         }
     }
 }

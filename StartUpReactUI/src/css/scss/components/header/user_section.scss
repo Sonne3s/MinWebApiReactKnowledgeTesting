@@ -1,0 +1,54 @@
+@mixin show-user-menu-block() {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+#user-section {
+    justify-content: space-evenly;
+    display: flex;
+    margin-left: auto;
+
+    #user-menu, #auth-menu{
+        display: none;
+    }
+
+    #user-menu, #auth-menu {
+        background-color: brown;
+    }
+
+    &.authenticated {
+        #unauthenticated-user {
+            display: none;
+        }
+        &:hover {
+            background-color: red;                
+            width: 200px!important;
+            #authenticated-user-name {
+                display: none;
+            }
+            #user-menu {
+                @include show-user-menu-block();
+            }
+        }        
+    }
+
+
+    &:not(.authenticated) {
+        #authenticated-user-name {
+            display: none;
+        }
+        &:hover {
+            background-color: red;                
+            width: 200px!important;
+            #unauthenticated-user-name {
+                display: none;
+            }
+            #auth-menu {
+                @include show-user-menu-block();
+            }
+        }
+    }   
+}

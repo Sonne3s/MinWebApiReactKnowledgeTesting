@@ -33,14 +33,13 @@ export default function AuthForm(props) {
 
         fetch(url, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(authenticationData)
         })
-            .then(response => response.json())
-            .then(responseFromServer => {
-                console.log(responseFromServer);
+            .then(() => {
                 props.changePage(Constants.CURRENT_PAGE.Home);
             })
             .catch((error) => {

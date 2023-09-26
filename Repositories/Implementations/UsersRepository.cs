@@ -1,4 +1,5 @@
-﻿using Repositories.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories.Interfaces;
 using Repositories.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,14 @@ namespace Repositories.Implementations
                 {
                     return null;
                 }
+            }
+        }
+
+        public async Task<User?> Get(Guid id)
+        {
+            using (var db = new Context())
+            {
+                return await db.Users.SingleOrDefaultAsync(u => u.Id == id);
             }
         }
     }

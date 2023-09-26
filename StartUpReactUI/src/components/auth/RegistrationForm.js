@@ -45,9 +45,7 @@ export default function RegistrationForm(props) {
             },
             body: JSON.stringify(registrationData)
         })
-            .then(response => response.json())
-            .then(responseFromServer => {
-                console.log(responseFromServer);
+            .then(() => {
                 props.changePage(Constants.CURRENT_PAGE.Home);
             })
             .catch((error) => {

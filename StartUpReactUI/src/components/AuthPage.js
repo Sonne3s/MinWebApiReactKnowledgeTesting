@@ -9,7 +9,7 @@ export default function AuthPage(props) {
 
     return (
         <div className="auth-page">
-            {!showingRegistrationForm && <AuthForm setShowingRegistrationForm={setShowingRegistrationForm} changePage={props.changePage} />}
+            {!showingRegistrationForm && <AuthForm setShowingRegistrationForm={setShowingRegistrationForm} changePage={props.changePage} setCurrentUser={props.setCurrentUser} />}
             {showingRegistrationForm && <RegistrationForm setShowingRegistrationForm={setShowingRegistrationForm} changePage={props.changePage} />}
         </div>
     );
